@@ -1,0 +1,28 @@
+#include "obstaclesView.h"
+
+struct CactiView initCactiView(const struct CactiModel* tmpCacti, SDL_Renderer* tmpRender) {   
+    printf("Create modul Cacti View\n");
+    struct CactiView mthis = {
+                           cloud : tmpCacti,
+                           textur : NULL, //IMG_LoadTexture(tmpRender, "image/cloud.png"),
+                           render : tmpRender,
+    };
+    return mthis;
+}    
+
+void drawCactiView(struct CactiView* mthis) {
+    for (int i = 0; i < mthis->cloud->sizeArrCacti; i++) {
+        SDL_Rect square = {mthis->cloud->arrCacti[i].x, 200, 90, 20};
+        SDL_SetRenderDrawColor(mthis->render, 255, 0, 0, 255); // Красный цвет
+        SDL_RenderFillRect(mthis->render, &square);
+//        SDL_RenderCopy(mthis->render, mthis->textur, NULL, &square); 
+    }
+}
+
+void freeCactiView(struct CactiView* mthis) {
+    printf("Free modul Cacti View\n");
+    SDL_DestroyTexture(mthis->textur);
+    mthis->cloud = NULL;
+    mthis->textur = NULL;
+    mthis->render = NULL;
+}
